@@ -13,7 +13,6 @@
     <ul class="other-menu">
       <li v-for="(item, i) in otherMenu" :key="i">
         <router-link :to="`${item.id}`">{{ item.content }}</router-link>
-        <!-- <a href="#">{{ item }}</a> -->
       </li>
     </ul>
   </div>
@@ -31,7 +30,6 @@ export default {
         { content: '最新上線', id: '/latest' },
         { content: '我的片單', id: '/mylist' },
       ],
-      // otherMenu: ['搜尋', '兒童專區'],
       otherMenu: [
         { content: '搜尋', id: '/search' },
         { content: '兒童專區', id: '/kids' },

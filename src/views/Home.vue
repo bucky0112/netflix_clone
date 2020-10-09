@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="head">
-      <!-- <Navbar></Navbar> -->
       <Banner :img="bannerImg.url"></Banner>
     </div>
     <div class="main">
@@ -46,10 +45,12 @@ export default {
       this.page = Math.floor(Math.random() * 500) + 1; // everytime refresh random data
     },
     getDiscover() {
+      const loader = this.$loading.show();
       const api = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.VUE_APP_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}`;
       this.axios.get(api).then((res) => {
         this.movieData = res.data;
         this.$set(this.bannerImg, 'url', this.movieData.results[0].backdrop_path); // image for banner
+        loader.hide();
       });
     },
   },
