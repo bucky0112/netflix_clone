@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="head">
-      <Banner :img="bannerImg.url"></Banner>
-    </div>
+    <Loading :active.sync="isLoading" />
+    <Banner></Banner>
     <div class="main">
-      <div class="my-list"></div>
-      <div class="tv"></div>
+      <!-- <div class="my-list"></div> -->
+      <div class="tv">
+      </div>
       <div class="movie"></div>
     </div>
     <div class="footer"></div>
@@ -21,41 +21,27 @@
 </template>
 
 <script>
-// import Navbar from '@/components/Navbar.vue';
 import Banner from '@/components/Banner.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Home',
   components: {
-    // Navbar,
     Banner,
   },
   data() {
     return {
-      movieData: {},
-      page: 0,
-      // imgUrl: {},
-      bannerImg: {
-        url: '',
-      },
     };
   },
   methods: {
-    getRandom() {
-      this.page = Math.floor(Math.random() * 500) + 1; // everytime refresh random data
-    },
     getDiscover() {
-      const loader = this.$loading.show();
-      const api = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.VUE_APP_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}`;
-      this.axios.get(api).then((res) => {
-        this.movieData = res.data;
-        this.$set(this.bannerImg, 'url', this.movieData.results[0].backdrop_path); // image for banner
-        loader.hide();
-      });
+      this.$store.dispatch('getDiscover');
     },
   },
+  computed: {
+    ...mapState(['isLoading', 'movieData']),
+  },
   created() {
-    this.getRandom();
     this.getDiscover();
   },
 };

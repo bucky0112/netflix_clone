@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Layout',
+    // name: 'Layout',
     component: () => import('../views/Layout.vue'),
     children: [
       {
